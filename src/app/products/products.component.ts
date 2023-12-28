@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Service } from '../models/service.model';
 import { EditServiceDialogComponent } from '../edit-service-dialog/edit-service-dialog.component';
 import { ServicesService } from '../services/services.service';
+import { ShoppingCartService } from '../services/shopping-cart.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -42,7 +44,8 @@ export class ProductsComponent implements OnInit {
   
   
 
-  constructor(private productService: ProductsService, public dialog: MatDialog, private serviceService: ServicesService) {}
+  constructor(private shoppingCartService: ShoppingCartService, private productService: ProductsService, public dialog: MatDialog, private serviceService: ServicesService,
+    public authService: AuthService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((data: Product[]) => {
@@ -57,7 +60,7 @@ export class ProductsComponent implements OnInit {
 
   editProduct(product: Product): void {
     const dialogRef = this.dialog.open(EditProductDialogComponent, {
-      width: '500px',  // You can adjust this value as needed.
+      width: '500px',
       data: { product: product }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -87,7 +90,7 @@ export class ProductsComponent implements OnInit {
 
   editService(service: Service): void {
     const dialogRef = this.dialog.open(EditServiceDialogComponent, {
-      width: '500px',  // You can adjust this value as needed.
+      width: '500px',
       data: { service: service }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -96,7 +99,6 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteService(service: Service) {
-    console.log(service);
     const serviceId = service.service_id!;
     if (!serviceId) {
       console.error('service ID is missing');
@@ -164,4 +166,8 @@ onSort(event: any) {
 
   }
 }
+
+  addToCart(product: Product) {
+    this.shoppingCartService.addToCart(product);
+  }
 }

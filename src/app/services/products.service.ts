@@ -34,6 +34,10 @@ export class ProductsService {
 
   uploadImage(imageData: FormData): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}`+'/uploadS', imageData);
-}
+  }
 
+  reduceProductQuantity(productId: number, quantity: number): Observable<any> {
+    const url = `${this.baseUrl}/reduceQuantity/${productId}`;
+    return this.httpClient.patch(url, { quantity });
+  }  
 }

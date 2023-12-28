@@ -13,6 +13,7 @@ export class AddServiceComponent {
     duration: 0,
     price: 0,
     composition:" ",
+    service_date: new Date(),
   };
 
   constructor(private serviceService: ServicesService) { }

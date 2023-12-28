@@ -25,22 +25,53 @@ export class AddProductComponent {
 
   addProduct() {
     if (this.selectedFile) {
-        const formData: FormData = new FormData();
-        formData.append('image', this.selectedFile, this.selectedFile.name);
-
-        this.productService.uploadImage(formData).subscribe((response: any) => {
-            this.product.picture = response.imageUrl;
-            this.sendProductToServer();
-        });
+      const formData = new FormData();
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      
+      this.productService.uploadImage(formData).subscribe({
+        next: (response) => {
+          this.product.picture = response.imageUrl; 
+  
+          this.productService.createProduct(this.product).subscribe({
+            next: (data) => {
+              console.log('Product added with image successfully!', data);
+            },
+            error: (addError) => {
+              console.error('Failed to add product after image upload:', addError);
+            }
+          });
+        },
+        error: (uploadError) => {
+          console.error('Failed to upload image:', uploadError);
+        }
+      });
     } else {
-        this.sendProductToServer();
+      this.productService.createProduct(this.product).subscribe({
+        next: (data) => {
+          console.log('Product added!', data);
+        },
+        error: (addError) => {
+          console.error('Failed to add product:', addError);
+        }
+      });
     }
-}
+  }
+  
+  
 
 sendProductToServer() {
-    this.productService.createProduct(this.product).subscribe(data => {
-        console.log('Product added!', data);
-    });
+  this.productService.createProduct(this.product).subscribe(
+      data => {
+          console.log('Product added!', data);
+      },
+      error => {
+          if (error.error.message === 'Supplier does not exist') {
+              console.error('Supplier does not exist');
+          } else {
+              console.error('Failed to add product', error);
+          }
+      }
+  );
 }
 
 onFileSelected(event: any) {

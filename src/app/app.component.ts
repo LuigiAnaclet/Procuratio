@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class AppComponent implements OnInit, OnDestroy {
   currentTime: string | undefined;
   private timeInterval: any;
+
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.updateTime();
@@ -30,5 +34,18 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.timeInterval) {
       clearInterval(this.timeInterval);
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+  canGoBack(): boolean {
+    return this.router.url !== '/';
   }
 }

@@ -7,4 +7,6 @@ export interface Product {
   description?: string;
   brand?: string;
   type?: string;
+  supplier?: string;
+  date_added?: Date; 
 }
