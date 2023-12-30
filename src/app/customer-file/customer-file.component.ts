@@ -57,7 +57,11 @@ export class CustomerFileComponent implements OnInit {
     if(this.selectedCustomer.user_id){
       this.fetchCustomerDetails(this.selectedCustomer.user_id);
     }
-    
+  }
+
+  private filterUpcomingAppointments(appointments: Appointment[]): Appointment[] {
+    const now = new Date();
+    return appointments.filter(appointment => new Date(appointment.appointment_date) > now);
   }
 
   private fetchCustomerDetails(customerId: number): void {
@@ -68,7 +72,7 @@ export class CustomerFileComponent implements OnInit {
 
     // Fetch appointments
     this.appointmentService.getAppointmentsPerUser(customerId).subscribe(appointments => {
-      this.appointments = appointments;
+      this.appointments = this.filterUpcomingAppointments(appointments);
     });
 
 

@@ -66,9 +66,6 @@ businessHoursValidator(control: AbstractControl): ValidationErrors | null {
       (error) => {
         console.error('There was an error retrieving employees!', error);
       });
-
-
-
     this.currentUser = this.authService.getCurrentUser();
 
     if (this.authService.isEmployee() && this.currentUser) {
@@ -77,8 +74,6 @@ businessHoursValidator(control: AbstractControl): ValidationErrors | null {
         this.appointmentForm.get('employee_id')?.setValue(this.currentUser.user_id);
         this.appointmentForm.get('employee_id')?.disable();
       }
-
-      
       this.userService.getCustomers().subscribe(
         (data) => {
           this.customers = data;
@@ -119,6 +114,7 @@ businessHoursValidator(control: AbstractControl): ValidationErrors | null {
         next: (isAvailable) => {
           if (isAvailable) {
             console.log(this.appointmentForm.value);
+            this.appointmentForm.get('employee_id')?.enable();
             this.appointmentService.saveAppointment(this.appointmentForm.value).subscribe({
               next: () => {
                 this.appointmentSaved.emit();
@@ -128,6 +124,7 @@ businessHoursValidator(control: AbstractControl): ValidationErrors | null {
               }
             });
             this.appointmentSaved.emit();
+            this.appointmentForm.get('employee_id')?.disable();
           } else {
             this.appointmentNotAvailable = true;
           }

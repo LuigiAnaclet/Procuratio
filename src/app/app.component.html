@@ -5,7 +5,9 @@
   
   <a routerLink="/" routerLinkActive="active">WAREHOUSE</a>
 
-  <button routerLink="/cart" *ngIf="authService.isCustomer()">Panier</button>
+  <a *ngIf="authService.isCustomer()" [routerLink]="['/cart']">
+    <mat-icon>shopping_cart</mat-icon>
+  </a>
 
   <span class="spacer"></span>
   <span *ngIf="authService.isUserLoggedIn()">Hello, {{ authService.getCurrentUserName() }}</span>
@@ -15,9 +17,7 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <a *ngIf="authService.isCustomer()" [routerLink]="['/cart']">
-    <mat-icon>shopping_cart</mat-icon>
-  </a>
+  
 
   <mat-menu #mainMenu="matMenu">
     <button mat-menu-item *ngIf="authService.isEmployee()" routerLink="/product/add">Ajouter un produit</button>
