@@ -1,0 +1,3 @@
+[submodule "Procuratio-Frontend"]
+	path = Procuratio-Frontend
+	url = https://github.com/LuigiAnaclet/Procuratio-Frontend.git
