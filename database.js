@@ -7,7 +7,7 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
     ssl: {
-    rejectUnauthorized: false, // You might want to import the CA cert instead of using rejectUnauthorized
+    rejectUnauthorized: false,
     require: true
   }
 });
