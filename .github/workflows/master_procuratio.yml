@@ -19,7 +19,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: procuratio_db
-          POSTGRES_DB: Stanley97231
+          POSTGRES_DB: Stanley97231!
         ports:
           - 5432:5432
         options: >-
@@ -39,10 +39,10 @@ jobs:
       - name: npm install, build and start
         env:
             PGUSER: postgres
-            PGPASSWORD: Stanley97231
+            PGPASSWORD: Stanley97231!
             PGDATABASE: procuratio_db
             PGPORT: 5432
-            PGHOST: localhost
+            PGHOST: procuratio-server.postgres.database.azure.com
         run: |
           npm install
           npm run build --if-present
