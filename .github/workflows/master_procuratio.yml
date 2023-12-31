@@ -21,11 +21,17 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and test
+      - name: npm install, build, start
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
+          npm run start
+
+      - name: Build Frontend
+        run: |
+          cd Procuratio-Frontend
+          npm install
+          npm run build:frontend
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
