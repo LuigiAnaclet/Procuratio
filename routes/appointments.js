@@ -157,8 +157,6 @@ router.post('/api/appointments', async (req, res) => {
   const customer_user_id = req.body.customer_id; 
   const employee_user_id = req.body.employee_id;
 
-  //console.log(req.body);
-
   try {
     await pool.query('BEGIN');
 
