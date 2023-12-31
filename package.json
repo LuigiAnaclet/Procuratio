@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"No tests specified\"",
+  "start": "node server.js",
+  "build:frontend": "cd Procuration-Frontend && ng build --prod"
   },
   "keywords": [],
   "author": "",
